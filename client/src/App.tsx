@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import AccordionsItem from './Components/Accordions/AccordionsItem';
+import Container from './Components/Container';
+import Heading from './Components/Heading';
+
+// data 
+import accordionData from './Data/accordionData';
 
 function App() {
+  const [active, setActive] = useState<number | null>(null);
+
+  function handleToggle(index: number) {
+    if (active === index) {
+      return setActive(null);
+    }
+    setActive(index);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-col justify-center items-center h-screen bg-white">
+      <Container>
+        <Heading title='React Accordions' subtitle='komponent til React.' center />
+        <ul className='flex flex-col items-center gap-[1rem] py-[20px]'>
+          {accordionData.map((item) => (
+            <AccordionsItem
+              key={item.id}
+              item={item}
+              active={active}
+              handleToggle={handleToggle}
+            />
+          ))}
+        </ul>
+      </Container>
     </div>
   );
 }
